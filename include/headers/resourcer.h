@@ -30,6 +30,7 @@ public:
     static Resourcer& getInstance();
 
     TTF_Font* getFont();
+    
     void setFontSize(int size);
 
 };

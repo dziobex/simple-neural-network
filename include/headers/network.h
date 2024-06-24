@@ -1,8 +1,11 @@
 #pragma once
 
 #include <random>
+#include <ctime>
 
-#include "layer.h"
+#include "neuron.h"
+#include "link.h"
+#include "constants.h"
 
 /*
     central management
@@ -12,26 +15,24 @@ class Network {
 
 private:
 
-    Layer* inputLayer;
-
-    std::vector<Layer> hiddenLayers;
-    
-    Layer* outputLayer;
-
-public:
-
-    Network();
-    ~Network();
-
-    void init( int in, int hid, int out );
-
-    void draw_network( SDL_Renderer* renderer );
+    std::vector<Neuron*> neurons;
+    std::vector<Link*>   connections;
 
     void setRandomWeights();
 
     void backwardPropagation();
 
-    void launchTest();
+public:
 
+    void forwardPropagation( std::vector<int> input, SDL_Renderer* renderer );
+
+    Network();
+    ~Network();
+
+    void init( std::vector<int> built, SDL_Renderer *renderer );
+
+    bool learn( std::vector<int> input, int output, SDL_Renderer* renderer );
+
+    void draw_network( SDL_Renderer* renderer );
 
 };

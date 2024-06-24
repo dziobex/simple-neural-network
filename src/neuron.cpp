@@ -18,6 +18,8 @@ Neuron::Neuron( int x, int y, double radius, Color color, SDL_Renderer* renderer
     this->radius = radius;
     this->color  = color;
 
+    biased = false;     // default
+
     setValue( 0.0, renderer );
 }
 
@@ -66,22 +68,22 @@ void Neuron::setValue( double value, SDL_Renderer *renderer ) {
     SDL_FreeSurface(textSurface);
 }
 
-void Neuron::setType( Neuron_T type ) {
+void Neuron::setLayer( int layer ) {
 
-    switch ( type ) {
+    switch ( layer ) {
         default:
-        case input:
+        case 0:
             this->color = Color(0, 255, 0, 255);
             break;
-        case hidden:
+        case 1:
             this->color = Color(128, 128, 128, 255);
             break;
-        case output:
+        case 2:
             this->color = Color(0, 0, 255, 255);
             break;
     }
 
-    this->type = type;
+    this->layer = layer;
 }
 
 /*
@@ -93,4 +95,25 @@ position_t Neuron::getPosition() {
 
 double Neuron::getValue() {
     return this->value;
+}
+
+/*
+    change the value
+*/
+void Neuron::activationFunction( SDL_Renderer *renderer ) {
+
+    setValue( 1.f / ( 1.f + std::exp(-this->value) ), renderer );
+
+}
+
+int Neuron::getLayer( ) {
+    return this->layer;
+}
+
+void Neuron::setBiased( bool is ) {
+    this->biased = is;
+}
+
+bool Neuron::isBiased() {
+    return this->biased;
 }

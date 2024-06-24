@@ -1,8 +1,6 @@
 #include "handler.h"
 
-Handler::Handler() {
-
-}
+Handler::Handler() { }
 
 /*
     clean up before quitting
@@ -45,12 +43,27 @@ void Handler::start() {
     SDL_Event event;
     bool running = true;
 
-    Layer* layer1 = new Layer( 2, input, renderer, 0, 3 );
-    Layer* layer2 = new Layer( 2, hidden, renderer, 1, 3 );    
-    Layer* layer3 = new Layer( 1, output, renderer, 2, 3 );
+    Network* network = new Network();
 
-    layer1->setNextLayer( layer2 );
-    layer2->setNextLayer( layer3 );    
+    network->init( {2, 3, 1}, renderer );
+
+    /*
+        teaching the network --- xor set
+    */
+
+   //int x = 0;
+   int cn = 0;
+    while ( cn < 100 ) {
+        network->learn( { 1, 0 }, 1, renderer );
+        network->learn( { 0, 1 }, 1, renderer );
+        network->learn( { 0, 0 }, 0, renderer );
+        network->learn( { 1, 1 }, 0, renderer );
+        ++cn;
+    }
+
+    printf("%d\n", cn);
+
+    network->forwardPropagation( {0, 0}, renderer);
 
     while (running) {
 
@@ -61,23 +74,16 @@ void Handler::start() {
         }
 
         // draw background
-
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         SDL_RenderClear(renderer);
 
         // draw!
-
-        layer1->draw_layer( renderer );
-        layer2->draw_layer( renderer );
-        layer3->draw_layer( renderer );
+        network->draw_network( renderer );
 
         // update the scene
         SDL_RenderPresent(renderer);
 
     }
 
-    delete layer1;
-    delete layer2;
-    delete layer3;
-
+    delete network;
 }

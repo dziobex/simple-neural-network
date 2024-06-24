@@ -30,7 +30,15 @@ class Link {
         void draw_link(SDL_Renderer *renderer);
 
         void assignWeight ( double weight );
+        double getWeight();
 
         double getValue();
+        double getBValue();
+
+        bool isOutNeuron( Neuron* neuron );
+        bool isInNeuron( Neuron* neuron );
+
+        double getInValue();
+        double getOutValue();
 
 };

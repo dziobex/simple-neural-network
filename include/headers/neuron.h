@@ -2,9 +2,9 @@
 
 #include <iomanip>
 #include <sstream>
+#include <cmath>
 
 #include "resourcer.h"
-#include "neuron_type.h"
 #include "color.h"
 #include "shape.h"
 
@@ -22,15 +22,20 @@ class Neuron {
 private:
 
     position_t position;    // position on the screen
+
     double radius;          // radius of the circle
+
     Color color;            // color inside the circle
 
     double value;           // value the neuron holds
 
     SDL_Texture* valueTexture;
+
     int tWidth, tHeight, tX, tY;
 
-    Neuron_T type;
+    int layer;
+
+    bool biased;
 
 public:
 
@@ -43,10 +48,18 @@ public:
 
     void setValue( double value, SDL_Renderer *renderer );
 
-    void setType( Neuron_T type );
+    void setLayer( int layer );
 
     position_t getPosition();
 
     double getValue();
+
+    void activationFunction( SDL_Renderer *renderer );
+
+    int getLayer( );
+
+    void setBiased( bool is );
+
+    bool isBiased();
 
 };
