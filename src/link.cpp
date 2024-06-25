@@ -74,3 +74,10 @@ double Link::getInValue() {
 double Link::getOutValue() {
     return this->neuronOut->getValue();
 }
+
+Neuron* Link::getInNeuron() {
+    return this->neuronIn;
+}
+Neuron* Link::getOutNeuron() {
+    return this->neuronOut;
+}

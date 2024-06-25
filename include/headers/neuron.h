@@ -29,6 +29,8 @@ private:
 
     double value;           // value the neuron holds
 
+    double gradient;        // error
+
     SDL_Texture* valueTexture;
 
     int tWidth, tHeight, tX, tY;
@@ -61,5 +63,9 @@ public:
     void setBiased( bool is );
 
     bool isBiased();
+
+    void setGradient(double gradient);
+
+    double getGradient();
 
 };

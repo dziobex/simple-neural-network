@@ -41,4 +41,7 @@ class Link {
         double getInValue();
         double getOutValue();
 
+        Neuron* getInNeuron();
+        Neuron* getOutNeuron();
+
 };

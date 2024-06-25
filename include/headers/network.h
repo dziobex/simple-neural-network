@@ -20,19 +20,23 @@ private:
 
     void setRandomWeights();
 
-    void backwardPropagation();
+    void backwardPropagation( double target, SDL_Renderer* renderer );
+
+    
 
 public:
 
-    void forwardPropagation( std::vector<int> input, SDL_Renderer* renderer );
+    void forwardPropagation( std::vector<double> input, SDL_Renderer* renderer );
 
     Network();
     ~Network();
 
-    void init( std::vector<int> built, SDL_Renderer *renderer );
+    void init( std::vector<double> built, SDL_Renderer *renderer );
 
-    bool learn( std::vector<int> input, int output, SDL_Renderer* renderer );
+    bool learn( std::vector<double> input, double output, SDL_Renderer* renderer );
 
     void draw_network( SDL_Renderer* renderer );
+
+    void displayNetwork();
 
 };

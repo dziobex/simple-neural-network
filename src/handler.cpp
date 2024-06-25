@@ -51,19 +51,21 @@ void Handler::start() {
         teaching the network --- xor set
     */
 
-   //int x = 0;
-   int cn = 0;
-    while ( cn < 100 ) {
-        network->learn( { 1, 0 }, 1, renderer );
-        network->learn( { 0, 1 }, 1, renderer );
-        network->learn( { 0, 0 }, 0, renderer );
-        network->learn( { 1, 1 }, 0, renderer );
-        ++cn;
+    int cn = 0;
+
+    while ( cn++ < 2000 ) { // better learning
+
+        network->learn( {1.f, 0.f}, 1.f, renderer );
+        network->learn( {0.f, 1.f}, 1.f, renderer );
+        network->learn( {0.f, 0.f}, 0.f, renderer );
+        network->learn( {1.f, 1.f}, 0.f, renderer );
+
     }
 
-    printf("%d\n", cn);
+    printf("Training iterations: %d\n", cn);
 
-    network->forwardPropagation( {0, 0}, renderer);
+    network->forwardPropagation({1, 0}, renderer ); // test the network
+    network->displayNetwork();
 
     while (running) {
 

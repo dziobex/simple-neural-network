@@ -1,14 +1,8 @@
 #pragma once
 
-#include <math.h>
 #include <vector>
 
 #include "network.h"
-#include "resourcer.h"
-#include "neuron.h"
-#include "color.h"
-#include "link.h"
-#include "constants.h"
 
 class Handler {
 
