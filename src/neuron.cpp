@@ -1,8 +1,4 @@
 #include "neuron.h"
-#include <stdio.h>
-#include <sstream>
-#include <iomanip>
-#include <SDL_ttf.h>
 
 Neuron::Neuron() : value(0), layer(0), biased(false), valueTexture(nullptr), gradient(0.0) {}
 
@@ -21,7 +17,7 @@ void Neuron::draw_neuron(SDL_Renderer* renderer) {
     SDL_RenderDrawCircle(renderer, position.first, position.second, radius);
     SDL_RenderFillCircle(renderer, position.first, position.second, radius);
 
-    // Draw text
+    // draw txt
     SDL_Rect renderQuad = { tX, tY, tWidth, tHeight };
     SDL_RenderCopy(renderer, valueTexture, nullptr, &renderQuad);
 }
@@ -29,7 +25,7 @@ void Neuron::draw_neuron(SDL_Renderer* renderer) {
 void Neuron::setValue(double value, SDL_Renderer* renderer) {
     this->value = value;
 
-    // Prepare text texture
+    // text texture
     std::stringstream ss;
     ss << std::fixed << std::setprecision(2) << value;
     std::string valueText = ss.str();
@@ -42,7 +38,7 @@ void Neuron::setValue(double value, SDL_Renderer* renderer) {
     tX = position.first - tWidth / 2;
     tY = position.second - tHeight / 2;
 
-    // Init valueTexture
+    // init valueTexture
     valueTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
     SDL_FreeSurface(textSurface);
 }

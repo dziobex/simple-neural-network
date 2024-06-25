@@ -51,9 +51,9 @@ void Handler::start() {
         teaching the network --- xor set
     */
 
-    int cn = 0;
+    int testCount = 0;
 
-    while ( cn++ < 2000 ) { // better learning
+    while ( testCount++ < TEST_COUNT ) {
 
         network->learn( {1.f, 0.f}, 1.f, renderer );
         network->learn( {0.f, 1.f}, 1.f, renderer );
@@ -62,12 +62,10 @@ void Handler::start() {
 
     }
 
-    printf("Training iterations: %d\n", cn);
-
     network->forwardPropagation({1, 0}, renderer ); // test the network
     network->displayNetwork();
 
-    while (running) {
+    while ( running ) {
 
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {

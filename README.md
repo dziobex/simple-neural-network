@@ -1,14 +1,5 @@
 # simple neural network
-Perceptron wielowarstwowy (Multilayer Perceptron - MLP)
+Simple neural network visualisation (<b>m</b>ulti<b>l</b>ayer <b>p</b>erceptron). Do XOR simulation.
 
-# One layer perceptron
-AND
-
-# the XOR problem
-MPL
-
-# sources
-* https://www.cs.put.poznan.pl/rklaus/assn/percep.htm
-* https://pl.wikipedia.org/wiki/Neuron_McCullocha-Pittsa
-* https://pl.wikipedia.org/wiki/Perceptron_wielowarstwowy
-* https://home.agh.edu.pl/~vlsi/AI/xor_t/en/main.htm
+# Screenshots
+![1 xor 0](docs/1xor0.png)

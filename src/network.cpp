@@ -1,7 +1,4 @@
 #include "network.h"
-#include <random>
-#include <cmath>
-#include <cstdio>
 
 Network::Network() {}
 

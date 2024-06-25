@@ -99,7 +99,6 @@ SDL_RenderFillCircle(SDL_Renderer * renderer, int x, int y, int radius)
 
 int
 SDL_RenderDrawLine(SDL_Renderer *renderer, int x1, int y1, int x2, int y2, int thickness) {
-    // invalid thickness
     if (thickness <= 0) {
         return -1;
     }
@@ -126,17 +125,16 @@ SDL_RenderDrawLine(SDL_Renderer *renderer, int x1, int y1, int x2, int y2, int t
     SDL_RenderDrawLine(renderer, points[2].x, points[2].y, points[3].x, points[3].y);
     SDL_RenderDrawLine(renderer, points[3].x, points[3].y, points[0].x, points[0].y);
 
-    // Scanline Fill Algorithm
+    // scanline-fill algorithm
     int min_x = fmin(fmin(points[0].x, points[1].x), fmin(points[2].x, points[3].x));
     int max_x = fmax(fmax(points[0].x, points[1].x), fmax(points[2].x, points[3].x));
     int min_y = fmin(fmin(points[0].y, points[1].y), fmin(points[2].y, points[3].y));
     int max_y = fmax(fmax(points[0].y, points[1].y), fmax(points[2].y, points[3].y));
 
-    for (int y = min_y; y <= max_y; y++) {
-        for (int x = min_x; x <= max_x; x++) {
-            int i, j;
+    for ( int y = min_y; y <= max_y; ++y ) {
+        for ( int x = min_x; x <= max_x; ++x ) {
             int intersections = 0;
-            for (i = 0, j = 3; i < 4; j = i++) {
+            for (int i = 0, j = 3; i < 4; j = i++) {
                 if (((points[i].y > y) != (points[j].y > y)) &&
                     (x < (points[j].x - points[i].x) * (y - points[i].y) / (points[j].y - points[i].y) + points[i].x)) {
                     intersections++;

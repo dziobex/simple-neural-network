@@ -48,24 +48,23 @@ public:
 
     void draw_neuron( SDL_Renderer *renderer );
 
-    void setValue( double value, SDL_Renderer *renderer );
-
-    void setLayer( int layer );
-
     position_t getPosition();
 
+    void setValue( double value, SDL_Renderer *renderer );
     double getValue();
-
     void activationFunction( SDL_Renderer *renderer );
 
+    void setLayer( int layer );
     int getLayer( );
 
-    void setBiased( bool is );
-
-    bool isBiased();
-
     void setGradient(double gradient);
-
     double getGradient();
+
+    /*
+        sometimes it's worth to have some biased neurons
+        i decided to remove them :P but they might be needed
+    */
+    void setBiased( bool is );
+    bool isBiased();
 
 };
