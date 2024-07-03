@@ -16,27 +16,27 @@ class Network {
 private:
 
     std::vector<Neuron*> neurons;
+    std::vector<int>     biases;        // for each layer, except of the input one
     std::vector<Link*>   connections;
 
     void setRandomWeights();
-
-    void backwardPropagation( double target, SDL_Renderer* renderer );
-
     
+    void forwardPropagation( std::vector<double> input );
+    void backwardPropagation( double target );
+
+    double lr;
 
 public:
-
-    void forwardPropagation( std::vector<double> input, SDL_Renderer* renderer );
 
     Network();
     ~Network();
 
     void init( std::vector<double> built, SDL_Renderer *renderer );
 
-    bool learn( std::vector<double> input, double output, SDL_Renderer* renderer );
-
     void draw_network( SDL_Renderer* renderer );
 
-    void displayNetwork();
+    void displayNetwork( std::vector<std::vector<double>>& input );
+
+    double train( std::vector<std::vector<double>>& input, std::vector<double>& output );
 
 };

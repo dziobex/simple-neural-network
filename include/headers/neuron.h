@@ -37,34 +37,28 @@ private:
 
     int layer;
 
-    bool biased;
-
 public:
 
     Neuron();
     ~Neuron();
 
     Neuron( int x, int y, double radius, Color color, SDL_Renderer* renderer );
-
-    void draw_neuron( SDL_Renderer *renderer );
-
+    
     position_t getPosition();
 
-    void setValue( double value, SDL_Renderer *renderer );
+    void draw_neuron( SDL_Renderer *renderer );
+    void updateVisuals( SDL_Renderer* renderer );
+
+    void setValue( double value );
     double getValue();
-    void activationFunction( SDL_Renderer *renderer );
+    
+    double activationFunction();
+    double activationFunctionDerivative();
 
     void setLayer( int layer );
     int getLayer( );
 
-    void setGradient(double gradient);
+    void setGradient (double gradient );
     double getGradient();
-
-    /*
-        sometimes it's worth to have some biased neurons
-        i decided to remove them :P but they might be needed
-    */
-    void setBiased( bool is );
-    bool isBiased();
 
 };

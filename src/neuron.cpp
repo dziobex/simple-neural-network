@@ -1,14 +1,22 @@
 #include "neuron.h"
 
-Neuron::Neuron() : value(0), layer(0), biased(false), valueTexture(nullptr), gradient(0.0) {}
+Neuron::Neuron() {
+    value               = 0;
+    layer               = 0;
+    gradient            = 0.0;
+    valueTexture        = nullptr;
+}
 
 Neuron::~Neuron() {
     SDL_DestroyTexture(valueTexture);
 }
 
-Neuron::Neuron(int x, int y, double radius, Color color, SDL_Renderer* renderer) 
-    : position(x, y), radius(radius), color(color), biased(false), valueTexture(nullptr) {
-    setValue(0.0, renderer);
+Neuron::Neuron(int x, int y, double radius, Color color, SDL_Renderer* renderer) {
+    this->value         = value;
+    this->position      = std::make_pair( x, y );
+    this->radius        = radius;
+    this->color         = color;
+    this->valueTexture  = nullptr;
 }
 
 void Neuron::draw_neuron(SDL_Renderer* renderer) {
@@ -22,28 +30,11 @@ void Neuron::draw_neuron(SDL_Renderer* renderer) {
     SDL_RenderCopy(renderer, valueTexture, nullptr, &renderQuad);
 }
 
-void Neuron::setValue(double value, SDL_Renderer* renderer) {
+void Neuron::setValue( double value ) {
     this->value = value;
-
-    // text texture
-    std::stringstream ss;
-    ss << std::fixed << std::setprecision(2) << value;
-    std::string valueText = ss.str();
-
-    SDL_Color textColor = { 255, 0, 0, 255 };           // 红色
-    SDL_Surface* textSurface = TTF_RenderText_Solid(Resourcer::getInstance().getFont(), valueText.c_str(), textColor);
-
-    tWidth = textSurface->w;
-    tHeight = textSurface->h;
-    tX = position.first - tWidth / 2;
-    tY = position.second - tHeight / 2;
-
-    // init valueTexture
-    valueTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-    SDL_FreeSurface(textSurface);
 }
 
-void Neuron::setLayer(int layer) {
+void Neuron::setLayer( int layer ) {
     switch (layer) {
         default:
         case 0:
@@ -68,22 +59,8 @@ double Neuron::getValue() {
     return this->value;
 }
 
-void Neuron::activationFunction(SDL_Renderer* renderer) {
-
-    setValue( 1.f / (1.f + std::exp(-this->value)), renderer );
-
-}
-
 int Neuron::getLayer() {
     return this->layer;
-}
-
-void Neuron::setBiased(bool is) {
-    this->biased = is;
-}
-
-bool Neuron::isBiased() {
-    return this->biased;
 }
 
 void Neuron::setGradient(double gradient) {
@@ -92,4 +69,37 @@ void Neuron::setGradient(double gradient) {
 
 double Neuron::getGradient() {
     return this->gradient;
+}
+
+void Neuron::updateVisuals( SDL_Renderer* renderer ) {
+
+    // text texture
+    std::stringstream ss;
+
+    // double val = ( value != 1 && value != 0 ) ? log ( abs ( value / (1 - value) ) ) / log(std::exp(1)): value ;
+    ss << std::fixed << std::setprecision(1) << value;
+    std::string valueText = ss.str() ;
+
+    SDL_Color textColor = { 255, 0, 0, 255 };           // 红色
+    SDL_Surface* textSurface = TTF_RenderText_Solid(Resourcer::getInstance().getFont(), valueText.c_str(), textColor);
+
+    tWidth = textSurface->w;
+    tHeight = textSurface->h;
+    tX = position.first - tWidth / 2;
+    tY = position.second - tHeight / 2;
+
+    // init valueTexture
+    valueTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+    SDL_FreeSurface(textSurface);
+}
+
+/*
+    removed sigmoid 1/(1+e^(-x)) because of corvengence to 0.5
+*/
+double Neuron::activationFunction() {
+    return tanh( this->value );
+}
+
+double Neuron::activationFunctionDerivative() {
+    return 1.0 - this->value * this->value;
 }

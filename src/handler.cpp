@@ -1,6 +1,8 @@
 #include "handler.h"
 
-Handler::Handler() { }
+Handler::Handler() {
+    
+}
 
 /*
     clean up before quitting
@@ -33,6 +35,9 @@ bool Handler::init() {
     if ( this->renderer == nullptr )
         return false;
 
+    
+    
+
     return true;
 }
 
@@ -45,31 +50,40 @@ void Handler::start() {
 
     Network* network = new Network();
 
-    network->init( {2, 3, 1}, renderer );
-
-    /*
-        teaching the network --- xor set
-    */
+    network->init( {2, 3, 1}, renderer );   // 2 inputs, 3 hidden neurons, 1 output
 
     int testCount = 0;
+    bool found = false;
 
-    while ( testCount++ < TEST_COUNT ) {
+    std::vector<std::vector<double>> input = {
+        { 0.0, 1.0 },
+        { 0.0, 0.0 },
+        { 1.0, 0.0 },
+        { 1.0, 1.0 }
+    };
 
-        network->learn( {1.f, 0.f}, 1.f, renderer );
-        network->learn( {0.f, 1.f}, 1.f, renderer );
-        network->learn( {0.f, 0.f}, 0.f, renderer );
-        network->learn( {1.f, 1.f}, 0.f, renderer );
-
-    }
-
-    network->forwardPropagation({1, 0}, renderer ); // test the network
-    network->displayNetwork();
+    std::vector<double> output = {
+        1.0,
+        0.0,
+        1.0,
+        0.0
+    };
 
     while ( running ) {
 
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
+        while (SDL_PollEvent(&event))
+            if (event.type == SDL_QUIT)
                 running = false;
+
+        if ( testCount++ < MAX_TEST_COUNT && !found ) {
+            
+            double error = network->train( input, output );
+
+            if ( error <= LEARNING_PRECISION || testCount >= MAX_TEST_COUNT ) {
+                printf("Tests in total: %d\n", testCount);   // add visible test counter
+                std::reverse( input.begin(), input.end() );  // for fun B)
+                network->displayNetwork( input );
+                found = true;
             }
         }
 

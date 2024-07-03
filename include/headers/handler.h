@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <algorithm>
 
 #include "network.h"
 
@@ -8,8 +9,8 @@ class Handler {
 
 private:
 
-    SDL_Renderer *renderer = nullptr;
-    SDL_Window   *window   = nullptr;
+    SDL_Renderer *renderer              = nullptr;
+    SDL_Window   *window                = nullptr;
 
 public:
 

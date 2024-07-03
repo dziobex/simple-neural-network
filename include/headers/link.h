@@ -17,7 +17,6 @@ class Link {
         Neuron *neuronOut;
 
         Color color;
-
         double weight;
 
     public:
@@ -31,15 +30,6 @@ class Link {
 
         void assignWeight ( double weight );
         double getWeight();
-
-        double getValue();
-        double getBValue();
-
-        bool isOutNeuron( Neuron* neuron );
-        bool isInNeuron( Neuron* neuron );
-
-        double getInValue();
-        double getOutValue();
 
         Neuron* getInNeuron();
         Neuron* getOutNeuron();

@@ -14,11 +14,10 @@ Resourcer::Resourcer() {
 }
 
 /*
-    free resources
+    🎶i want to be break free🎶
 */
 Resourcer::~Resourcer() {
     std::cout << "Resourcer is being destroyed.\n";
-
     TTF_CloseFont( font );
 }
 
@@ -35,5 +34,5 @@ TTF_Font* Resourcer::getFont() {
 }
 
 void Resourcer::setFontSize(int size) {
-    TTF_SetFontSize(this->font, size);
+    TTF_SetFontSize( this->font, size );
 }
