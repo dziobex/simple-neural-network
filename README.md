@@ -17,6 +17,14 @@ Training starts with **forward propagation** (also known as feed-forward). It go
 
 I added bias neurons to each layer to shift the values to better fit the network to the training data.
 
+# How to run?
+```
+git clone https://github.com/dziobex/simple-neural-network.git
+cd simple-neural-network
+mingw32-make
+./neuro
+```
+
 # Preview
 ## 1 &oplus; 1
 ![](docs/1xor1.png)
